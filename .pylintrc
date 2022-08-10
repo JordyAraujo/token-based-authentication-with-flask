@@ -1,0 +1,10 @@
+[MESSAGES CONTROL]
+
+disable=missing-function-docstring,
+    missing-module-docstring,
+    broad-except,
+    import-error ; Not ideal. Check how to deal with imports, venv and pylintrc.
+
+init-hook='import sys; sys.path.append(".venv")'
+
+good-names=id
