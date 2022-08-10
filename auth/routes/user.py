@@ -13,12 +13,12 @@ bp = Blueprint("user", __name__)
 @token_required
 def get_all(current_user):
     return make_response(
-        jsonify({"users": user.get_all(), "current": current_user}), 200
+        jsonify({"users": user.get_all(), "current_user": current_user}), 200
     )
 
 
 @bp.route("/signup", methods=["POST"])
-def create_token():
+def create_user():
     data = request.json
     payload = {"username": data["username"]}
     token = jwt.encode(payload, app.config.SECRET_KEY, "HS256").decode("utf-8")
