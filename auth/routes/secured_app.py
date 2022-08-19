@@ -1,7 +1,4 @@
-import jwt
-from flask import Blueprint
-from flask import current_app as app
-from flask import jsonify, make_response, request
+from flask import Blueprint, jsonify, make_response, request
 
 from auth.decorators import token_required
 from auth.models import secured_app
@@ -27,17 +24,8 @@ def get_all(current_user):
 @token_required
 def create_app(current_user):
     data = request.json
-    payload = {"app_name": data["app_name"]}
-    secret_key = jwt.encode(payload, app.config.SECRET_KEY, "HS256")
-    app_id = secured_app.add(data["app_name"], secret_key)
+    app_id = secured_app.add(data["app_name"], current_user)
     return make_response(
-        jsonify(
-            {
-                "id": app_id,
-                "current_user": current_user,
-                "app_name": data["app_name"],
-                "secret_key": secret_key,
-            }
-        ),
+        jsonify({"id": app_id, "app_name": data["app_name"]}),
         201,
     )

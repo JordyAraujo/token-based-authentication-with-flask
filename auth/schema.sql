@@ -6,13 +6,15 @@ DROP TABLE IF EXISTS user_group_app;
 CREATE TABLE app_group (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   group_name VARCHAR(255) NOT NULL UNIQUE,
-  secured_app_id INT NOT NULL
+  secured_app_id INT NOT NULL,
+  created_by VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE user_group_app (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INT NOT NULL,
-  group_id INT NOT NULL
+  group_id INT NOT NULL,
+  created_by VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE user (
@@ -23,5 +25,6 @@ CREATE TABLE user (
 
 CREATE TABLE secured_app (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  app_name VARCHAR(255) NOT NULL UNIQUE
+  app_name VARCHAR(255) NOT NULL UNIQUE,
+  created_by VARCHAR(255) NOT NULL
 );
