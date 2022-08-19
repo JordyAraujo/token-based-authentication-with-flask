@@ -4,7 +4,7 @@ from dynaconf import FlaskDynaconf
 from flask import Flask
 
 from . import db
-from .routes import user
+from .routes import secured_app, user
 
 
 def create_app():
@@ -24,5 +24,6 @@ def create_app():
 
     # Routes
     app.register_blueprint(user.bp)
+    app.register_blueprint(secured_app.bp)
 
     return app
