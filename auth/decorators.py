@@ -6,6 +6,8 @@ from flask import jsonify, make_response, request
 
 
 def token_required(secured_function):
+    """Requires token authentication before executing decorated function."""
+
     @wraps(secured_function)
     def decorator(*args, **kwargs):
         token = None

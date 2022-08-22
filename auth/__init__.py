@@ -8,6 +8,7 @@ from .routes import app_group, authorization, secured_app, user
 
 
 def create_app():
+    """Initialize Application."""
     app = Flask(__name__)
     FlaskDynaconf(app, settings_files=[".secrets.toml"])
     app.config.from_mapping(

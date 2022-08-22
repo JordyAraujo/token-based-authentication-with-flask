@@ -2,6 +2,25 @@ from auth.db import get_db
 
 
 def add(user_id, group_id, created_by):
+    """Create and Insert a new Secured App into the Database.
+
+    Parameters
+    ----------
+    user_id : `int`
+        ID of the User to be added to the Group.
+    group_id : `int`
+        ID of the Group to be added to the User.
+    created_by : `str`
+        Username of the User creating the authorization relationship.
+
+    Returns
+    -------
+    {
+        "app_group": app_group,
+        "app_name": app_name,
+        "username": username
+    }
+    """
     db_conn = get_db()
     cursor = db_conn.cursor()
     cursor.execute(
@@ -11,12 +30,10 @@ def add(user_id, group_id, created_by):
             VALUES
                 (?, ?, ?)
         """,
-        (user_id, group_id, created_by),
+        (str(user_id), str(group_id), created_by),
     )
     db_conn.commit()
     pivot_id = cursor.lastrowid
-    print(pivot_id)
-
     return cursor.execute(
         """
             SELECT
@@ -45,6 +62,19 @@ def add(user_id, group_id, created_by):
 
 
 def get_all():
+    """Get all Authorization Relationships from the Database.
+
+    Returns
+    -------
+    [
+        {
+            "id": id,
+            "user_id": user_id,
+            "group_id": group_id,
+            "created_by": created_by
+        }
+    ]
+    """
     return (
         get_db()
         .execute(
